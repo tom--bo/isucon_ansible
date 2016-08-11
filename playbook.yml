@@ -21,7 +21,7 @@
         src=submodules/settings
         dest=/home/{{ isuconuser }}
         owner={{ isuconuser }}
-        group=root
+        group={{ isuconuser }}
         mode=0755
 
     - name: Add user tombo
@@ -60,5 +60,32 @@
         owner={{ tombouser }}
         group=root
         state=link
+
+
+
+    - name: (temporary) Set up isucon user
+      copy: >
+        src=submodules/dotfiles
+        dest=/home/{{ isuconuser }}
+        owner={{ isuconuser }}
+        group=root
+        mode=0755
+
+    - name: (temporary) set vimrc file
+      file: >
+        src=/home/{{ isuconuser }}/dotfiles/vimrc
+        dest=/home/{{ isuconuser }}/.vimrc
+        owner={{ isuconuser }}
+        group={{ isuconuser }}
+        state=link
+
+    - name: (temporary) set tmux file
+      file: >
+        src=/home/{{ isuconuser }}/dotfiles/tmux.conf
+        dest=/home/{{ isuconuser }}/.tmux.conf
+        owner={{ isuconuser }}
+        group={{ isuconuser }}
+        state=link
+
 
 
