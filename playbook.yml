@@ -1,5 +1,8 @@
 - hosts: isucon_server
   become: yes
+  vars:
+    tombouser: tombo
+    isuconuser: isucon
   tasks:
     - name: update yum
       yum: name=* state=latest
@@ -11,22 +14,51 @@
         - htop
         - tmux
         - zsh
+        - git
 
-        #    - name: import other tools
-        #
-        #
-        #    - name: make our directory
-        #
-        #
-        #    - name: copy settings to our directory
-        #
-        #
-        #    - name: set settings to common user
-        #
-        #
-        #    - name: add tombo user
-        #
-        #
-        #    - name: set up tombo user
+    - name: Set up tombo
+      copy: >
+        src=submodules/settings
+        dest=/home/{{ isuconuser }}
+        owner={{ isuconuser }}
+        group=root
+        mode=0755
+
+    - name: Add user tombo
+      user: name={{ tombouser }} shell=/bin/zsh group=wheel
+
+    - name: Set up tombo
+      copy: >
+        src=submodules/dotfiles
+        dest=/home/{{ tombouser }}
+        owner={{ tombouser }}
+        group=root
+        mode=0755
+
+    - name: set vimrc file
+      file: >
+        src=/home/{{ tombouser }}/dotfiles/vimrc
+        dest=/home/{{ tombouser }}/.vimrc
+        owner={{ tombouser }}
+        group=root
+        state=link
+    - name: remove .zshrc
+      file: path=/home/{{ tombouser }}/.zshrc state=absent
+
+    - name: set zshrc file
+      file: >
+        src=/home/{{ tombouser }}/dotfiles/zshrc
+        dest=/home/{{ tombouser }}/.zshrc
+        owner={{ tombouser }}
+        group=root
+        state=link
+
+    - name: set tmux file
+      file: >
+        src=/home/{{ tombouser }}/dotfiles/tmux.conf
+        dest=/home/{{ tombouser }}/.tmux.conf
+        owner={{ tombouser }}
+        group=root
+        state=link
 
 
