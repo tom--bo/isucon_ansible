@@ -1,0 +1,32 @@
+- hosts: isucon_server
+  become: yes
+  tasks:
+    - name: update yum
+      yum: name=* state=latest
+
+    - name: import yum repositories
+      yum: name={{ item }} state=installed
+      with_items:
+        - vim
+        - htop
+        - tmux
+        - zsh
+
+        #    - name: import other tools
+        #
+        #
+        #    - name: make our directory
+        #
+        #
+        #    - name: copy settings to our directory
+        #
+        #
+        #    - name: set settings to common user
+        #
+        #
+        #    - name: add tombo user
+        #
+        #
+        #    - name: set up tombo user
+
+
