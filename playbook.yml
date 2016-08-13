@@ -15,6 +15,11 @@
         - tmux
         - zsh
         - git
+        - perl-Time-HiRes
+        - perl-IO-Socket-SSL
+
+    - name: percona-toolkit
+      yum: name=https://www.percona.com/downloads/percona-toolkit/2.2.18/RPM/percona-toolkit-2.2.18-1.noarch.rpm
 
     - name: Set up tombo
       copy: >
