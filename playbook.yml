@@ -15,6 +15,11 @@
         - tmux
         - zsh
         - git
+        - perl-Time-HiRes
+        - perl-IO-Socket-SSL
+
+    - name: percona-toolkit
+      yum: name=https://www.percona.com/downloads/percona-toolkit/2.2.18/RPM/percona-toolkit-2.2.18-1.noarch.rpm
 
     - name: Set up tombo
       copy: >
@@ -63,13 +68,24 @@
 
 
 
-    - name: (temporary) Set up isucon user
+    - name: (temporary) copy dotfiles to isucon user
       copy: >
         src=submodules/dotfiles
         dest=/home/{{ isuconuser }}
         owner={{ isuconuser }}
         group=root
         mode=0755
+
+    - name: Change default shell to zsh
+      user: name={{ isuconuser }} shell=/bin/zsh
+
+    - name: (temporary) set zshrc file
+      file: >
+        src=/home/{{ isuconuser }}/dotfiles/zshrc
+        dest=/home/{{ isuconuser }}/.zshrc
+        owner={{ isuconuser }}
+        group={{ isuconuser }}
+        state=link
 
     - name: (temporary) set vimrc file
       file: >
