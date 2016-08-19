@@ -4,22 +4,12 @@
     tombouser: tombo
     isuconuser: isucon
   tasks:
-    - name: update yum
-      yum: name=* state=latest
 
-    - name: import yum repositories
-      yum: name={{ item }} state=installed
-      with_items:
-        - vim
-        - htop
-        - tmux
-        - zsh
-        - git
-        - perl-Time-HiRes
-        - perl-IO-Socket-SSL
+    - include: ubuntu.yml
+      when: ansible_distribution == "Ubuntu"
 
-    - name: percona-toolkit
-      yum: name=https://www.percona.com/downloads/percona-toolkit/2.2.18/RPM/percona-toolkit-2.2.18-1.noarch.rpm
+    - include: redhat.yml
+      when: "ansible_os_family == 'RedHat'"
 
     - name: Set up tombo
       copy: >
