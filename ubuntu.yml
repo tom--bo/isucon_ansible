@@ -1,0 +1,21 @@
+- hosts: isucon_server
+  become: yes
+
+  tasks:
+    - name: update apt
+      apt: name=* state=latest
+      when: ansible_distribution == "Ubuntu"
+
+    - name: import apt repositories
+      apt: name={{ item }} state=installed
+      when: ansible_distribution == "Ubuntu"
+      with_items:
+        - vim
+        - htop
+        - tmux
+        - zsh
+        - git
+        - perl-Time-HiRes
+        - perl-IO-Socket-SSL
+        - varnish
+

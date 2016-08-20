@@ -1,0 +1,25 @@
+- hosts: isucon_server
+  become: yes
+
+  tasks:
+    - name: update yum
+      yum: name=* state=latest
+      when: "ansible_os_family == 'RedHat'"
+
+    - name: import yum repositories
+      yum: name={{ item }} state=installed
+      when: "ansible_os_family == 'RedHat'"
+      with_items:
+        - vim
+        - htop
+        - tmux
+        - zsh
+        - git
+        - perl-Time-HiRes
+        - perl-IO-Socket-SSL
+        - varnish
+
+    - name: percona-toolkit
+      yum: name=https://www.percona.com/downloads/percona-toolkit/2.2.18/RPM/percona-toolkit-2.2.18-1.noarch.rpm
+
+
