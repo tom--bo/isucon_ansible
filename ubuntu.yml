@@ -1,7 +1,3 @@
-- hosts: isucon_server
-  become: yes
-
-  tasks:
     - name: update apt
       apt: name=* state=latest
       when: ansible_distribution == "Ubuntu"
