@@ -1,5 +1,5 @@
     - name: update apt
-      apt: name=* state=latest
+      apt: update_cache=yes
       when: ansible_distribution == "Ubuntu"
 
     - name: import apt repositories
@@ -11,7 +11,4 @@
         - tmux
         - zsh
         - git
-        - perl-Time-HiRes
-        - perl-IO-Socket-SSL
-        - varnish
 
