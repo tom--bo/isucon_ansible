@@ -11,23 +11,14 @@
     - include: redhat.yml
       when: "ansible_os_family == 'RedHat'"
 
-    - name: Set up tombo
-      copy: >
-        src=submodules/settings
-        dest=/home/{{ isuconuser }}
-        owner={{ isuconuser }}
-        group={{ isuconuser }}
-        mode=0755
-
     - name: Add user tombo
-      user: name={{ tombouser }} shell=/bin/zsh group=wheel
+      user: name={{ tombouser }} shell=/bin/zsh group=sudo
 
     - name: Set up tombo
       copy: >
         src=submodules/dotfiles
         dest=/home/{{ tombouser }}
         owner={{ tombouser }}
-        group=root
         mode=0755
 
     - name: set vimrc file
@@ -35,8 +26,8 @@
         src=/home/{{ tombouser }}/dotfiles/vimrc
         dest=/home/{{ tombouser }}/.vimrc
         owner={{ tombouser }}
-        group=root
         state=link
+
     - name: remove .zshrc
       file: path=/home/{{ tombouser }}/.zshrc state=absent
 
@@ -45,7 +36,6 @@
         src=/home/{{ tombouser }}/dotfiles/zshrc
         dest=/home/{{ tombouser }}/.zshrc
         owner={{ tombouser }}
-        group=root
         state=link
 
     - name: set tmux file
@@ -53,18 +43,25 @@
         src=/home/{{ tombouser }}/dotfiles/tmux.conf
         dest=/home/{{ tombouser }}/.tmux.conf
         owner={{ tombouser }}
-        group=root
         state=link
 
-
+    - name: Add user isucon
+      user: name={{ isuconuser }} shell=/bin/zsh group=sudo
 
     - name: (temporary) copy dotfiles to isucon user
       copy: >
         src=submodules/dotfiles
         dest=/home/{{ isuconuser }}
         owner={{ isuconuser }}
-        group=root
         mode=0755
+
+    - name: Set up isucon
+      copy: >
+        src=submodules/settings
+        dest=/home/{{ isuconuser }}
+        owner={{ isuconuser }}
+        mode=0755
+
 
     - name: Change default shell to zsh
       user: name={{ isuconuser }} shell=/bin/zsh
@@ -74,7 +71,6 @@
         src=/home/{{ isuconuser }}/dotfiles/zshrc
         dest=/home/{{ isuconuser }}/.zshrc
         owner={{ isuconuser }}
-        group={{ isuconuser }}
         state=link
 
     - name: (temporary) set vimrc file
@@ -82,7 +78,6 @@
         src=/home/{{ isuconuser }}/dotfiles/vimrc
         dest=/home/{{ isuconuser }}/.vimrc
         owner={{ isuconuser }}
-        group={{ isuconuser }}
         state=link
 
     - name: (temporary) set tmux file
@@ -90,7 +85,6 @@
         src=/home/{{ isuconuser }}/dotfiles/tmux.conf
         dest=/home/{{ isuconuser }}/.tmux.conf
         owner={{ isuconuser }}
-        group={{ isuconuser }}
         state=link
 
 
