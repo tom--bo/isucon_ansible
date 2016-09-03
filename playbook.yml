@@ -45,6 +45,9 @@
         owner={{ tombouser }}
         state=link
 
+    - name: Add group isucon
+      group: name={{isuconuser}}
+
     - name: Add user isucon
       user: name={{ isuconuser }} shell=/bin/zsh group=sudo
 
