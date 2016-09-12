@@ -1,6 +1,0 @@
-[submodule "submodules/dotfiles"]
-	path = submodules/dotfiles
-	url = https://github.com/tom--bo/dotfiles
-[submodule "submodules/settings"]
-	path = submodules/settings
-	url = https://github.com/tom--bo/settings

@@ -37,6 +37,7 @@
         owner={{ tombouser }}
         group=root
         state=link
+
     - name: remove .zshrc
       file: path=/home/{{ tombouser }}/.zshrc state=absent
 
