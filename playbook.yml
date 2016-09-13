@@ -8,15 +8,15 @@
     - include: ubuntu.yml
       when: ansible_distribution == "Ubuntu"
 
-    - include: redhat.yml
-      when: "ansible_os_family == 'RedHat'"
+      #    - include: redhat.yml
+      #      when: "ansible_os_family == 'RedHat'"
 
-    - name: download percona-tool-kit
-      get_url:
-        url=https://www.percona.com/downloads/percona-toolkit/2.2.19/deb/percona-toolkit_2.2.19-1_all.deb
-        dest=/home/ubuntu/percona.deb
-    - name: install percona-tool-kit2
-      apt: deb=/home/ubuntu/percona.deb
+      #    - name: download percona-tool-kit
+      #      get_url:
+      #        url=https://www.percona.com/downloads/percona-toolkit/2.2.19/deb/percona-toolkit_2.2.19-1_all.deb
+      #        dest=/home/ubuntu/percona.deb
+      #    - name: install percona-tool-kit2
+      #      apt: deb=/home/ubuntu/percona.deb
 
 
     - name: Add user tombo
