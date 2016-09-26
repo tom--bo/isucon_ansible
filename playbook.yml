@@ -8,8 +8,8 @@
     - include: ubuntu.yml
       when: ansible_distribution == "Ubuntu"
 
-      #    - include: redhat.yml
-      #      when: "ansible_os_family == 'RedHat'"
+    - include: redhat.yml
+      when: "ansible_os_family == 'RedHat'"
 
     - name: download percona-tool-kit
       get_url:
