@@ -8,56 +8,55 @@
     - include: ubuntu.yml
       when: ansible_distribution == "Ubuntu"
 
-      #    - include: redhat.yml
-      #      when: "ansible_os_family == 'RedHat'"
+    - include: redhat.yml
+      when: "ansible_os_family == 'RedHat'"
 
-      #    - name: download percona-tool-kit
-      #      get_url:
-      #        url=https://www.percona.com/downloads/percona-toolkit/2.2.19/deb/percona-toolkit_2.2.19-1_all.deb
-      #        dest=/home/ubuntu/percona.deb
-      #    - name: install percona-tool-kit2
-      #      apt: deb=/home/ubuntu/percona.deb
+    - name: download percona-tool-kit
+      get_url:
+        url=https://www.percona.com/downloads/percona-toolkit/2.2.19/deb/percona-toolkit_2.2.19-1_all.deb
+        dest=/home/isucon/percona.deb
+    - name: install percona-tool-kit2
+      apt: deb=/home/isucon/percona.deb
 
+      #     - name: Add user tombo
+      #       user: name={{ tombouser }} shell=/bin/zsh group=sudo
 
-    - name: Add user tombo
-      user: name={{ tombouser }} shell=/bin/zsh group=sudo
+      #    - name: Set up tombo
+      #      copy: >
+      #        src=submodules/dotfiles
+      #        dest=/home/{{ tombouser }}
+      #        owner={{ tombouser }}
+      #        mode=0755
 
-    - name: Set up tombo
-      copy: >
-        src=submodules/dotfiles
-        dest=/home/{{ tombouser }}
-        owner={{ tombouser }}
-        mode=0755
+        #    - name: set vimrc file
+        #      file: >
+        #        src=/home/{{ tombouser }}/dotfiles/vimrc
+        #        dest=/home/{{ tombouser }}/.vimrc
+        #        owner={{ tombouser }}
+        #        state=link
+        #
+        #    - name: remove .zshrc
+        #      file: path=/home/{{ tombouser }}/.zshrc state=absent
+        #
+        #    - name: set zshrc file
+        #      file: >
+        #        src=/home/{{ tombouser }}/dotfiles/zshrc
+        #        dest=/home/{{ tombouser }}/.zshrc
+        #        owner={{ tombouser }}
+        #        state=link
+        #
+        #    - name: set tmux file
+        #      file: >
+        #        src=/home/{{ tombouser }}/dotfiles/tmux.conf
+        #        dest=/home/{{ tombouser }}/.tmux.conf
+        #        owner={{ tombouser }}
+        #        state=link
 
-    - name: set vimrc file
-      file: >
-        src=/home/{{ tombouser }}/dotfiles/vimrc
-        dest=/home/{{ tombouser }}/.vimrc
-        owner={{ tombouser }}
-        state=link
-
-    - name: remove .zshrc
-      file: path=/home/{{ tombouser }}/.zshrc state=absent
-
-    - name: set zshrc file
-      file: >
-        src=/home/{{ tombouser }}/dotfiles/zshrc
-        dest=/home/{{ tombouser }}/.zshrc
-        owner={{ tombouser }}
-        state=link
-
-    - name: set tmux file
-      file: >
-        src=/home/{{ tombouser }}/dotfiles/tmux.conf
-        dest=/home/{{ tombouser }}/.tmux.conf
-        owner={{ tombouser }}
-        state=link
-
-    - name: Add group isucon
-      group: name={{isuconuser}}
-
-    - name: Add user isucon
-      user: name={{ isuconuser }} shell=/bin/zsh group=sudo
+        #    - name: Add group isucon
+        #      group: name={{isuconuser}}
+        #
+        #    - name: Add user isucon
+        #      user: name={{ isuconuser }} shell=/bin/zsh group=sudo
 
     - name: (temporary) copy dotfiles to isucon user
       copy: >
