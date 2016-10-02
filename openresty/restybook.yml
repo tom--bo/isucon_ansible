@@ -68,4 +68,9 @@
     - name: create symlink for binary
       file: state=link src=/opt/openresty/nginx/sbin/nginx dest=/usr/sbin/nginx
 
-    - copy: src=statics/nginx dest=/etc/init.d/nginx mode=0755
+    - copy: src=statics/init/nginx dest=/etc/init.d/nginx mode=0755
+      ignore_errors: yes
+    - copy: src=statics/init/nginx.conf dest=/etc/init/nginx.conf mode=0755
+      ignore_errors: yes
+    - copy: src=statics/init/nginx.service dest=/lib/systemd/system/nginx.service mode=0755
+      ignore_errors: yes
