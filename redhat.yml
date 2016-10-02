@@ -1,7 +1,3 @@
-    - name: update yum
-      yum: name=* state=latest
-      when: ansible_os_family == 'RedHat'
-
     - name: import yum repositories
       yum: name={{ item }} state=installed
       when: ansible_os_family == 'RedHat'
