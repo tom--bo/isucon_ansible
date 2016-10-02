@@ -1,0 +1,71 @@
+- hosts: isucon_server
+  become: yes
+  vars:
+    ngx_dir: /opt/
+    version: 1.11.2.1
+  tasks:
+
+    # CentOS specific package installations
+    - include: RedHat.yml
+      when: ansible_os_family  == "RedHat"
+
+    # Debian specific package installations
+    - include: Debian.yml
+      when: ansible_os_family  == "Debian"
+
+    # Solaris specific package installations
+    - include: Solaris.yml
+      when: ansible_os_family == "Solaris"
+
+    - name: download openresty
+      get_url: url=https://openresty.org/download/openresty-1.11.2.1.tar.gz
+               dest=/tmp/
+
+    - name: Unarchive openresty
+      unarchive: src=/tmp/openresty-1.11.2.1.tar.gz
+                 dest=/tmp
+                 copy=no
+
+    - copy: src=statics/install-resty.sh dest=/tmp  mode=0775
+
+    - shell: /tmp/install-resty.sh creates=/opt/openresty
+
+    - name: remove build files
+      file: path={{ item }}
+            state=absent
+      with_fileglob:
+          - /tmp/openresty*
+
+
+    - name: check if /etc/nginx is a directory
+      stat: path=/etc/nginx/
+      register: nginx_conf
+    - name: create conf directory
+      command: mv /opt/openresty/nginx/conf /etc/nginx
+      when: nginx_conf.stat.isdir is not defined
+
+
+    - name: check if /opt/openresty/nginx/conf is a directory
+      stat: path=/opt/openresty/nginx/conf
+      register: openresty_conf
+    - name: remove conf directory
+      file: path=/opt/openresty/nginx/conf state=absent
+      when: openresty_conf.stat.isdir is defined 
+
+    - name: create symlinks
+      file: state=link src=/etc/nginx dest=/opt/openresty/nginx/conf
+
+    #- name:check service command
+    #- name: stop nginx before replacing it
+    #  command: service nginx stop
+    #           creates=/usr/sbin/nginx_orig
+
+
+    #- name: move original binary
+    #  command: mv -v /usr/sbin/nginx /usr/sbin/nginx_orig
+    #           creates=/usr/sbin/nginx_orig
+
+    - name: create symlink for binary
+      file: state=link src=/opt/openresty/nginx/sbin/nginx dest=/usr/sbin/nginx
+
+    - copy: src=statics/nginx dest=/etc/init.d/nginx mode=0755
