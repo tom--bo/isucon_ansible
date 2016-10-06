@@ -74,3 +74,4 @@
       ignore_errors: yes
     - copy: src=statics/init/nginx.service dest=/lib/systemd/system/nginx.service mode=0755
       ignore_errors: yes
+    - service: name=nginx state=restarted

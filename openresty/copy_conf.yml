@@ -1,13 +1,12 @@
 - hosts: isucon_server
   become: yes
   vars:
-    tombouser: tombo
     isuconuser: isucon
   tasks:
-
     - copy: src={{ item }} dest=/etc/nginx mode=0755
       with_files:
           - /statics/nginx.conf
           - /statics/mine.types
 
+    - service: name=nginx state=restarted
 
