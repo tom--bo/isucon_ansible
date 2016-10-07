@@ -25,7 +25,7 @@
 
     - name: (temporary) copy dotfiles to isucon user
       copy: >
-        src=submodules/dotfiles
+        src=dotfiles
         dest=/home/{{ isuconuser }}
         owner={{ isuconuser }}
         mode=0755
@@ -53,6 +53,21 @@
       file: >
         src=/home/{{ isuconuser }}/dotfiles/zshrc
         dest=/home/{{ isuconuser }}/.zshrc
+        owner={{ isuconuser }}
+        state=link
+
+    - name: check .zprofile exists ?
+      stat: path=/home/isucon/.zprofile
+      register: zprofile_exist
+
+    - name: Delete .zprofile if exist
+      file: path=/home/isucon/.zprofile state=absent
+      when: zprofile_exist.stat.exists
+
+    - name: (temporary) set zprofile file
+      file: >
+        src=/home/{{ isuconuser }}/dotfiles/zprofile
+        dest=/home/{{ isuconuser }}/.zprofile
         owner={{ isuconuser }}
         state=link
 
