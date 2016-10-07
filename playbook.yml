@@ -41,6 +41,14 @@
     - name: Change default shell to zsh
       user: name={{ isuconuser }} shell=/bin/zsh
 
+    - name: check .zshrc exists ?
+      stat: path=/home/isucon/.zshrc
+      register: zshrc_exist
+
+    - name: Delete .zshrc if exist
+      file: path=/home/isucon/.zshrc state=absent
+      when: zshrc_exist.stat.exists
+
     - name: (temporary) set zshrc file
       file: >
         src=/home/{{ isuconuser }}/dotfiles/zshrc
