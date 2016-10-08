@@ -1,0 +1,21 @@
+    - name: download go
+      get_url:
+        url: https://storage.googleapis.com/golang/go1.7.linux-amd64.tar.gz
+        dest: /tmp/go1.7.linux-amd64.tar.gz
+        mode: 0777
+
+    - name: check usr/local/go
+      stat: path=/home/isucon
+      register: go_exist
+
+    - name: remove old go if exist
+      file: path=/usr/local/go
+            state=absent
+      when: go_exist.stat.exists
+
+    - name: extract go
+      unarchive: src=/tmp/go1.7.linux-amd64.tar.gz dest=/usr/local/go
+
+
+
+
