@@ -55,7 +55,6 @@
     - name: create symlinks
       file: state=link src=/etc/nginx dest=/opt/openresty/nginx/conf
 
-    #- name:check service command
     #- name: stop nginx before replacing it
     #  command: service nginx stop
     #           creates=/usr/sbin/nginx_orig
@@ -64,6 +63,9 @@
     #- name: move original binary
     #  command: mv -v /usr/sbin/nginx /usr/sbin/nginx_orig
     #           creates=/usr/sbin/nginx_orig
+
+    - name: makdir /var/log/nginx
+      file: path=/var/log/nginx state=directory mode=0777
 
     - name: create symlink for binary
       file: state=link src=/opt/openresty/nginx/sbin/nginx dest=/usr/sbin/nginx
@@ -75,3 +77,4 @@
     - copy: src=statics/init/nginx.service dest=/lib/systemd/system/nginx.service mode=0755
       ignore_errors: yes
     - service: name=nginx state=restarted
+    - service: name=nginx enabled=yes
