@@ -11,6 +11,9 @@
         - libnet-ssleay-perl
         - libterm-readkey-perl
         - redis-server
+        - iperf
+        - sysbench
+        - pssh
 
     - name: download percona-tool-kit
       get_url:
