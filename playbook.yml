@@ -33,7 +33,7 @@
         owner={{ isuconuser }}
         mode=0755
 
-    - copy: src="pssh-key" dest="/home/{{isuconuser}}/.ssh/" mode=0755
+    - copy: src="pssh-key" dest="/home/{{isuconuser}}/.ssh/" owner=isucon group=isucon mode=0700
 
     - lineinfile: 
         dest: /home/{{isuconuser}}/.ssh/authorized_keys
