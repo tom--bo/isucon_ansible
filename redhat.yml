@@ -1,19 +1,22 @@
-    - name: import yum repositories
-      yum: name={{ item }} state=installed enablerepo=epel
-      when: ansible_os_family == 'RedHat'
-      with_items:
-        - vim
-        - htop
-        - tmux
-        - zsh
-        - git
-        - perl-Time-HiRes
-        - perl-IO-Socket-SSL
-        - varnish
-        - redis
+- name: import yum repositories
+  yum: name={{ item }} state=installed enablerepo=epel
+  when: ansible_os_family == 'RedHat'
+  with_items:
+    - vim
+    - htop
+    - tmux
+    - zsh
+    - git
+    - perl-Time-HiRes
+    - perl-IO-Socket-SSL
+    - varnish
+    - redis
+    - iperf
+    - pssh
+    - dstat
 
-    - name: percona-toolkit
-      yum: name=https://www.percona.com/downloads/percona-toolkit/2.2.18/RPM/percona-toolkit-2.2.18-1.noarch.rpm state=installed
-      ignore_errors: yes
+- name: percona-toolkit
+  yum: name=https://www.percona.com/downloads/percona-toolkit/2.2.18/RPM/percona-toolkit-2.2.18-1.noarch.rpm state=installed
+  ignore_errors: yes
 
 

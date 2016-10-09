@@ -105,4 +105,8 @@ alias xo='xclip -o'
 #tmux 256 color
 alias tmux='tmux -2'
 
+export GOROOT=/usr/local/go
+export GOPATH=/home/isucon/go
+export PATH=${PATH}:${GOROOT}/bin
+
 

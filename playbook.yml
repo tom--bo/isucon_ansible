@@ -35,6 +35,9 @@
         insertafter: '^# %wheel'
         line: "isucon ALL=(ALL)  NOPASSWD: ALL"
 
+    - name: mkdir /home/isucon/go
+      file: path=/home/isucon/go state=directory owner={{ isuconuser }} group={{ isuconuser }} mode=0755
+
     - name: (temporary) copy dotfiles to isucon user
       copy: >
         src=dotfiles
@@ -106,5 +109,6 @@
         owner={{ isuconuser }}
         state=link
 
+    - include: installGo.yml
 
 

@@ -1,24 +1,27 @@
-    - name: update apt & install
-      apt: name={{item}} state=present update_cache=yes
-      when: ansible_distribution == "Ubuntu"
-      with_items:
-        - vim
-        - htop
-        - tmux
-        - zsh
-        - git
-        - libio-socket-ssl-perl
-        - libnet-ssleay-perl
-        - libterm-readkey-perl
-        - redis-server
+- name: update apt & install
+  apt: name={{item}} state=present update_cache=yes
+  when: ansible_distribution == "Ubuntu"
+  with_items:
+    - vim
+    - htop
+    - tmux
+    - zsh
+    - git
+    - libio-socket-ssl-perl
+    - libnet-ssleay-perl
+    - libterm-readkey-perl
+    - redis-server
+    - iperf
+    - sysbench
+    - pssh
 
-    - name: download percona-tool-kit
-      get_url:
-        url=https://www.percona.com/downloads/percona-toolkit/2.2.19/deb/percona-toolkit_2.2.19-1_all.deb
-        dest=/home/ubuntu/percona.deb
-        # dest=/home/isucon/percona.deb
+- name: download percona-tool-kit
+  get_url:
+    url=https://www.percona.com/downloads/percona-toolkit/2.2.19/deb/percona-toolkit_2.2.19-1_all.deb
+    dest=/home/ubuntu/percona.deb
+    # dest=/home/isucon/percona.deb
 
-    - name: install percona-tool-kit2
-      apt: deb=/home/ubuntu/percona.deb
-      # apt: deb=/home/isucon/percona.deb
+- name: install percona-tool-kit2
+  apt: deb=/home/ubuntu/percona.deb
+  # apt: deb=/home/isucon/percona.deb
 
