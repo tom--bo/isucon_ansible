@@ -19,7 +19,7 @@
 
     - name: set PROMPT
       lineinfile:
-        line: 'PROMPT="%{$fg[blue]%}%* %{$fg_no_bold[yellow]%}%~ %{$reset_color%} (c{{item.0 | int + 1}}) %# "'
+        line: 'PROMPT="%{$fg[blue]%}%* %{$fg_no_bold[yellow]%}%~ %{$reset_color%}(c{{item.0 | int + 1}}) %# "'
         dest: /home/{{isuconuser}}/dotfiles/zshrc
         backup: yes
         regexp: '^PROMPT='
