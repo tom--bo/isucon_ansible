@@ -1,0 +1,29 @@
+- hosts: isucon_server
+  become: yes
+  vars:
+    isuconuser: isucon
+  tasks:
+    - file: path=/home/{{isuconuser}}/.ssh/config state=touch mode=0755
+    - name: block in file with items
+      blockinfile:
+        dest: /home/{{isuconuser}}/.ssh/config
+        marker: "# {mark} ANSIBLE MANAGED BLOCK {{item.0}}"
+        block: |
+          Host c{{item.0 | int + 1}}
+              HostName        {{item.1}}
+              IdentityFile    ~/.ssh/pssh-key
+              Port            22
+              User            isucon
+              StrictHostKeyChecking no 
+      with_indexed_items: ansible_play_hosts
+
+    - name: set PROMPT
+      lineinfile:
+        line: 'PROMPT="%{$fg[blue]%}%* %{$fg_no_bold[yellow]%}%~ %{$reset_color%} (c{{item.0 | int + 1}}) %# "'
+        dest: /home/{{isuconuser}}/dotfiles/zshrc
+        backup: yes
+        regexp: '^PROMPT='
+        insertafter: '^promptinit'
+      run_once: yes
+      delegate_to: "{{ item.1 }}"
+      with_indexed_items: ansible_play_hosts
