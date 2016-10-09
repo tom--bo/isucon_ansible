@@ -26,6 +26,9 @@
       user: name={{ isuconuser }} shell=/bin/zsh group=root
       when: not isucon_exist.stat.exists and ansible_os_family == "RedHat"
 
+    - name: mkdir /home/isucon/go
+      file: path=/home/isucon/go state=directory owner={{ isuconuser }} group={{ isuconuser }} mode=0755
+
     - name: (temporary) copy dotfiles to isucon user
       copy: >
         src=dotfiles
@@ -97,5 +100,6 @@
         owner={{ isuconuser }}
         state=link
 
+    - include: installGo.yml
 
 
