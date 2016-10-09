@@ -26,6 +26,15 @@
       user: name={{ isuconuser }} shell=/bin/zsh group=root
       when: not isucon_exist.stat.exists and ansible_os_family == "RedHat"
 
+    - name: configure sudoers
+      lineinfile:
+        dest: /etc/sudoers
+        backup: yes
+        state: present
+        regexp: '^isucon'
+        insertafter: '^# %wheel'
+        line: "isucon ALL=(ALL)  NOPASSWD: ALL"
+
     - name: (temporary) copy dotfiles to isucon user
       copy: >
         src=dotfiles
