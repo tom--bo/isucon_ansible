@@ -111,4 +111,6 @@
 
     - include: installGo.yml
 
+    - script: ./submodules/settings/scripts/goget.sh
+
 

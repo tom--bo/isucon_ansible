@@ -1,2 +1,2 @@
 export GOPATH=/home/isucon/go
-export PATH=${PATH}:~/setting/bin:${GOPATH}/bin
+export PATH=${PATH}:~/settings/bin:${GOPATH}/bin
