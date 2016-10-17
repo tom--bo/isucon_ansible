@@ -1,0 +1,12 @@
+[ui]
+	color = true
+[push]
+[alias]
+	logg = log --graph --all --decorate
+	st = status
+[color]
+	ui = true
+[push]
+	default = matching
+[core]
+	editor = /usr/bin/vim

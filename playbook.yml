@@ -35,8 +35,8 @@
         insertafter: '^# %wheel'
         line: "isucon ALL=(ALL)  NOPASSWD: ALL"
 
-    - name: mkdir /home/isucon/go
-      file: path=/home/isucon/go state=directory owner={{ isuconuser }} group={{ isuconuser }} mode=0755
+    - name: mkdir /home/isucon/mygo
+      file: path=/home/isucon/mygo state=directory owner={{ isuconuser }} group={{ isuconuser }} mode=0755
 
     - name: (temporary) copy dotfiles to isucon user
       copy: >
@@ -47,7 +47,7 @@
 
     - copy: src="pssh-key" dest="/home/{{isuconuser}}/.ssh/" owner=isucon group=isucon mode=0700
 
-    - lineinfile: 
+    - lineinfile:
         dest: /home/{{isuconuser}}/.ssh/authorized_keys
         create: yes
         mode: 0755
@@ -114,6 +114,13 @@
         dest=/home/{{ isuconuser }}/.tmux.conf
         owner={{ isuconuser }}
         state=link
+
+    - name: set gitignore_etc file
+      copy: >
+        src=/home/{{ isuconuser }}/dotfiles/gitignore_etc
+        dest=/etc/.gitignore
+        owner=root
+        mode=0777
 
     - include: installGo.yml
 
