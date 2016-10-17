@@ -10,10 +10,10 @@
     - perl-Time-HiRes
     - perl-IO-Socket-SSL
     - varnish
-    - redis
     - iperf
     - pssh
     - dstat
+      #- redis
 
 - name: percona-toolkit
   yum: name=https://www.percona.com/downloads/percona-toolkit/2.2.18/RPM/percona-toolkit-2.2.18-1.noarch.rpm state=installed
