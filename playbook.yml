@@ -117,7 +117,7 @@
 
     - name: set gitignore_etc file
       copy: >
-        src=/home/{{ isuconuser }}/dotfiles/gitignore_etc
+        src=dotfiles/gitignore_etc
         dest=/etc/.gitignore
         owner=root
         mode=0777
@@ -126,4 +126,10 @@
 
     - script: ./submodules/settings/scripts/goget.sh
 
-
+    - name: chown mygo dir
+      file: >
+        dest=/home/{{ isuconuser }}/mygo
+        owner={{ isuconuser }}
+        group={{ isuconuser }}
+        mode=755
+        recurse=yes
