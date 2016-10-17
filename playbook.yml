@@ -54,13 +54,19 @@
         owner: "{{isuconuser}}"
         line: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGKmh2FG2Pe4L9HVL8zF5Ij5XoPHKdEVAMopGi01MHmDav6jCkMZgN/suBxDYhs++h0+RdyG2gb59XNI1eoClf5ykHB7nz/xDPNMggUHHwZLUG+tbNv6gG+U1X3aQ+p3wB0ZUmyaQM7JIVlWu9NirgFCcJIU3adcz2p3b8JaS6sBgwGtiLq8kIcKxQHYvAJcp3OIfkm97sNodDccoGRRnQXnwNSb9YYZ5roVij4T052m08V/0BTvIDmam27Jse+rRjAEwMABtWAsjBlwP9NnDUKEiLrrtjwb9Teu8PCPzvpBSycpefsTtkcJfL82SUu5zNSaPhQuueKlmQTNZs1bwX k.osaka@sugahara-no-MacBook-Air-2.local"
 
-    - name: Set up isucon
+    - name: Set up isucon set settings dir
       copy: >
         src=submodules/settings
         dest=/home/{{ isuconuser }}
         owner={{ isuconuser }}
         mode=0755
 
+    - name: Set up isucon set nginx2els-kibana dir
+      copy: >
+        src=submodules/nginx2els-kibana
+        dest=/home/{{ isuconuser }}
+        owner={{ isuconuser }}
+        mode=0755
 
     - name: Change default shell to zsh
       user: name={{ isuconuser }} shell=/bin/zsh

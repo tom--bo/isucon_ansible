@@ -1,0 +1,68 @@
+{
+"mappings":
+{
+  "access" : {
+    "properties" : {
+      "time" : {
+        "type" : "date",
+		"format" : "dd/MMM/YYYY:HH:mm:ss Z"
+      },
+      "host" : {
+        "type" : "string",
+		    "index" : "not_analyzed"
+      },
+      "forwardedfor" : {
+        "type" : "string",
+		    "index" : "not_analyzed"
+      },
+      "req" : {
+        "type" : "string",
+        "index" : "not_analyzed"
+      },
+      "method" : {
+        "type" : "string",
+        "index" : "not_analyzed"
+      },
+      "uri" : {
+        "type" : "string",
+        "index" : "not_analyzed"
+      },
+      "status" : {
+        "type" : "integer"
+      },
+      "size" : {
+        "type" : "integer"
+      },
+      "ua" : {
+        "type" : "string",
+        "index" : "not_analyzed"
+      },
+      "reqtime" : {
+        "type" : "double"
+      },
+      "runtime" : {
+        "type" : "double"
+      },
+      "apptime" : {
+        "type" : "double"
+	  },
+      "cache" : {
+        "type" : "string",
+        "index" : "not_analyzed"
+      },
+      "vhost" : {
+        "type" : "string",
+		    "index" : "not_analyzed"
+      },
+      "handler" : {
+        "type" : "string",
+        "index" : "not_analyzed"
+      },
+      "protocol" : {
+        "type" : "string",
+        "index" : "not_analyzed"
+      }
+    }
+  }
+}
+}
