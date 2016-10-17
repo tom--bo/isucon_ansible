@@ -6,3 +6,12 @@
           - openssl-devel
           - curl
           - gcc
+          - libxslt-devel
+          - gd-devel
+          - perl-ExtUtils-Embed 
+          - gcc-c++  
+          - zlib-devel  
+          - libxml2-devel 
+          - gd-devel
+          - perl-ExtUtils-Embed
+          - gperftools-devel

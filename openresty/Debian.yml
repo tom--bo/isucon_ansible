@@ -14,3 +14,10 @@
       - libgd2-xpm-dev  # GD Library
       - checkinstall
       - gcc
+      - build-essential
+      - zlib1g-dev
+      - libxslt1-dev
+      - libxml2-dev
+      - libgd2-xpm-dev
+      - libgoogle-perftools-dev
+      - libperl-dev
