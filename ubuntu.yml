@@ -10,10 +10,11 @@
     - libio-socket-ssl-perl
     - libnet-ssleay-perl
     - libterm-readkey-perl
-    - redis-server
     - iperf
+    - dstat
     - sysbench
     - pssh
+      #- redis-server
 
 - name: download percona-tool-kit
   get_url:

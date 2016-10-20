@@ -106,7 +106,7 @@ alias xo='xclip -o'
 alias tmux='tmux -2'
 
 export GOROOT=/usr/local/go
-export GOPATH=/home/isucon/go
+export GOPATH=/home/isucon/mygo
 export PATH=${PATH}:${GOROOT}/bin
 
 

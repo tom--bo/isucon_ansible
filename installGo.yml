@@ -5,7 +5,7 @@
     mode: 0777
 
 - name: check usr/local/go
-  stat: path=/home/isucon
+  stat: path=/usr/local/go
   register: go_exist
 
 - name: remove old go if exist
