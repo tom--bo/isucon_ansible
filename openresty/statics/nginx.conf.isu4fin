@@ -1,0 +1,78 @@
+worker_processes  1;
+user isucon;
+events {
+    worker_connections  10000;
+
+}
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    log_format ltsv "time:$time_local"
+        "\thost:$remote_addr"
+        "\tforwardedfor:$http_x_forwarded_for"
+        "\treq:$request"
+        "\tmethod:$request_method"
+        "\turi:$request_uri"
+        "\tstatus:$status"
+        "\tsize:$body_bytes_sent"
+        "\treferer:$http_referer"
+        "\tua:$http_user_agent"
+        "\treqtime:$request_time"
+        "\truntime:$upstream_http_x_runtime"
+        "\tapptime:$upstream_response_time"
+        "\tcache:$upstream_http_x_cache"
+        "\tvhost:$host"
+        ;
+    access_log  /var/log/nginx/access.log ltsv;
+    sendfile        on; #カーネル空間でファイルのIOを行う(仮想環境だとhuguaigaokiyasui)
+    tcp_nopush     on;  #パケットをまとめてtcpパケットを減らす
+#   keepalive_timeout  0;
+#   keepalive_timeout  65;
+#    gzip  on;
+    upstream app {
+        keepalive 64;
+        server 127.0.0.1:8080;
+#        server unix:/tmp/go.sock;
+    }
+    server {
+    client_max_body_size 1G;
+    root /home/isucon/webapp/public;
+    include /etc/nginx/mime.types;
+		location / {
+			try_files $uri $uri/index.html @app;
+		}
+		location ~ ^/slots/([^/]+)/ads/([0-9]+)/asset$ {
+			expires 24h;
+			alias /tmp/images/isu4:asset:$1-$2.mp4;
+			#return 200 /tmp/images/isu4:asset:$1_$2.mp4;
+		}
+		location @app {
+            proxy_redirect          off;
+     		proxy_set_header Host $http_host;
+		    proxy_pass http://app;
+		}
+		location /images{
+			root /tmp;
+			# Basic認証を行ってアクセスするには、以下のように設定します。
+			# auth_basic            "webdav";
+			# auth_basic_user_file  /var/www/password/webdav;
+			client_max_body_size   100m;
+			# 基本WebDAVモジュールで許可するメソッドを指定します。ここでは全てです。
+			dav_methods PUT DELETE MKCOL COPY MOVE;
+			# 拡張WebDAVモジュールで許可するメソッドを指定します。ここでは全てです。
+
+			# WebDAVでのアクセス権を設定します。
+			#     user:rw ユーザは読書可。group:r グループは読書可 all:r; 全てのアクセス者は読のみ可
+			dav_access user:rw group:rw all:r;
+			access_log /var/log/nginx/maven.access.log;
+			error_log /var/log/nginx/maven.error.log;
+
+			# WebDAVで使用する一時的なファイルを作成するディレクトリを設定します。
+			client_body_temp_path  /tmp/nginx/webdav;
+			# WebDAV(PUTメソッド)でディレクトリを作成できる権限を与えます。デフォルトでは作成(off)できません。
+			create_full_put_path on;
+		}
+
+    }
+
+}
