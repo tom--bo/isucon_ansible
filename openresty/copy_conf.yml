@@ -5,7 +5,7 @@
   tasks:
     - copy: src={{ item }} dest=/etc/nginx mode=0755
       with_items:
-          -  statics/nginx.conf
+          -  statics/mynginx.conf
           -  statics/mine.types
 
     - service: name=nginx state=restarted
